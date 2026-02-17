@@ -25,7 +25,7 @@ public class ProdutoService {
 
     public Page<Produto> findAll() {
 
-        int pageNumber = 1;
+        int pageNumber = 0;
         int pageSize = 10;
 
         Pageable pageable = PageRequest.of(

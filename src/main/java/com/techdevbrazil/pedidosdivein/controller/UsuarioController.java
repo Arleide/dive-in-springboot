@@ -1,5 +1,7 @@
 package com.techdevbrazil.pedidosdivein.controller;
 
+import com.techdevbrazil.pedidosdivein.dto.esponse.UsuarioResponseDTO;
+import com.techdevbrazil.pedidosdivein.dto.request.UsuarioRequestDTO;
 import com.techdevbrazil.pedidosdivein.entity.Usuario;
 import com.techdevbrazil.pedidosdivein.service.UsuarioService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -19,7 +21,7 @@ public class UsuarioController {
     private final UsuarioService usuarioService;
 
     @GetMapping
-    public ResponseEntity<List<Usuario>> findAll() {
+    public ResponseEntity<List<UsuarioResponseDTO>> findAll() {
         return ResponseEntity.ok(usuarioService.findAll());
     }
 
@@ -29,8 +31,8 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public ResponseEntity<Usuario> save(@RequestBody Usuario usuario) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.save(usuario));
+    public ResponseEntity<UsuarioResponseDTO> save(@RequestBody UsuarioRequestDTO usuarioRequest) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.save(usuarioRequest));
     }
 
 
