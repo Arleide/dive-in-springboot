@@ -28,7 +28,6 @@ public class PedidoController {
         return ResponseEntity.ok(pedidoService.findById(id));
     }
 
-
     @PostMapping
     public ResponseEntity<Pedido> save(@RequestBody Pedido pedido) {
         return ResponseEntity.status(HttpStatus.CREATED).body(pedidoService.save(pedido));

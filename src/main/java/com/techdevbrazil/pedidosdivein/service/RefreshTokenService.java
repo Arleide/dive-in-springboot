@@ -1,0 +1,54 @@
+package com.techdevbrazil.pedidosdivein.service;
+
+import org.springframework.stereotype.Service;
+
+
+import com.techdevbrazil.pedidosdivein.entity.RefreshToken;
+import com.techdevbrazil.pedidosdivein.repository.RefreshTokenRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.UUID;
+
+@RequiredArgsConstructor
+@Service
+public class RefreshTokenService {
+
+    private final RefreshTokenRepository repository;
+
+    @Value("${security.jwt.refresh-expiration-minutes}")
+    private long refreshExpiration;
+
+
+    public RefreshToken create(Long userId) {
+        RefreshToken token = new RefreshToken();
+        token.setUserId(userId);
+        token.setToken(UUID.randomUUID().toString());
+        token.setExpiryDate(
+                LocalDateTime.now().plusMinutes(refreshExpiration));
+        token.setRevoked(false);
+        return repository.save(token);
+    }
+
+
+    public RefreshToken validate(String token) {
+
+        RefreshToken refreshToken = repository.findByToken(token)
+                .orElseThrow(() ->
+                        new RuntimeException("Refresh token inválido"));
+
+        if (refreshToken.isRevoked()) {
+            throw new RuntimeException("Refresh token revogado");
+        }
+
+        if (refreshToken.getExpiryDate().isBefore(LocalDateTime.now())) {
+            throw new RuntimeException("Refresh token expirado");
+        }
+
+        return refreshToken;
+    }
+
+
+}

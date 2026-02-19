@@ -32,5 +32,9 @@ public class UsuarioService {
         return DtoMapper.converter(usuariosalvo, UsuarioResponseDTO.class);
     }
 
+    public Usuario findByEmail(String email) {
+        return usuarioRepository.findByEmail(email);
+    }
+
 
 }

@@ -1,5 +1,6 @@
 package com.techdevbrazil.pedidosdivein.entity;
 
+import com.techdevbrazil.pedidosdivein.enums.RoleEnum;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -23,6 +24,9 @@ public class Usuario {
     private String email;
     private String senha;
     private Boolean ativo;
+
+    @Enumerated(EnumType.STRING)
+    private RoleEnum role;
 
     @CreationTimestamp
     private LocalDateTime dataCriacao;
