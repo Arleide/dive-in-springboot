@@ -46,4 +46,9 @@ public class ProdutoService {
 
     }
 
+    public void delete(Long id) {
+        Produto produto = new Produto(id);
+        produtoReposytory.delete(produto);
+    }
+
 }

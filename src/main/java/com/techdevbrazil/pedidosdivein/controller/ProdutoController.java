@@ -22,7 +22,7 @@ public class ProdutoController {
     private  final ProdutoService produtoService;
 
 
-    @PreAuthorize("hasRole('ADMIN')")
+    // @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public ResponseEntity<Page<Produto>> listarProdutos(){
         return  ResponseEntity.ok(produtoService.findAll());
@@ -32,6 +32,12 @@ public class ProdutoController {
     public  ResponseEntity<Produto> save(@RequestBody Produto produto){
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(produtoService.save(produto));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id){
+        produtoService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 
 }
